@@ -3,7 +3,7 @@ const hastToHTML = require(`hast-util-to-html`)
 const codeHandler = require(`./code-handler`)
 const AES = require(`crypto-js/aes`)
 
-module.exports = ({ markdownNode, markdownAST }, pluginOptions = {}) => {
+module.exports = ({ markdownNode, markdownAST }, pluginOptions = {password}) => {
 
   if (markdownNode.frontmatter.password) {
     // ast to html: copied from gatsby-transform-remark
@@ -18,7 +18,7 @@ module.exports = ({ markdownNode, markdownAST }, pluginOptions = {}) => {
     })
 
     // encrypt it use crypto-js
-    const crypted = AES.encrypt(html, String(markdownNode.frontmatter.password)).toString()
+    const crypted = AES.encrypt(html, String(markdownNode.frontmatter.password === true ? pluginOptions.password : markdownNode.frontmatter.password)).toString()
 
     // replace all nodes into single encrypted text
     markdownAST.children = [{

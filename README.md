@@ -19,14 +19,20 @@ plugins: [
     options: {
       plugins: [
         ...otherPlugins,
-+       `gatsby-remark-encrypt`
-      ],
++       {
++          resolve: `gatsby-remark-encrypt`,
++          options: {
++            password: "123456"
++          }
++        }
++      ],
     },
   },
 ]
 ```
 
 Add `password` field in frontmatter of the post you want to encrypt.
+If you want to use individual password, set any password, or set it to TRUE in case you want to use the plugin global password
 
 ``` diff
   ---
